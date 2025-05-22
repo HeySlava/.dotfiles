@@ -110,6 +110,9 @@ alias ssh='kitty +kitten ssh'
 alias airn="bluetoothctl connect C0:86:B3:DF:F8:59"
 alias airff="bluetoothctl disconnect C0:86:B3:DF:F8:59"
 alias venv="source /home/slava/code/bash_scripts/create_venv.sh"
+alias af='docker compose -f /home/slava/code/airflow-instanses/personal-2.4.2/docker-compose.yaml'
+
+alias yt-dlp=yt-dlp-wrapper
 
 
 alias ls='ls -F'
@@ -125,6 +128,7 @@ alias path="echo $PATH | tr : '\n'"
 alias ttl="sudo iptables -t mangle -A POSTROUTING -j TTL --ttl-set 65 && echo '-> ttl 65'"
 
 alias t="trans -indent 4 -d"
+alias nodiff="git diff --no-index"
 
 
 bind 'set bell-style none'
@@ -132,6 +136,7 @@ bind 'set bell-style none'
 
 export PATH=$PATH:$HOME/.local/bin/
 export PATH=/opt/node-v20.10.0-linux-x64/bin:$PATH
+export PATH=$HOME/code/learn.clickhouse.com:$PATH
 export EDITOR='nvim'
 
 setxkbmap "us,ru" ",winkeys" "grp:lwin_toggle"
