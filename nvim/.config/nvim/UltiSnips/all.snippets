@@ -2,63 +2,21 @@ snippet todo "creates template for todo (start, end, tag, task, status)"
 "`date +%'y-%m-%d %H:%M'`","${1:`date +%'Y-%m-%d %H:%M'`}","${2:My_tag}","${3:mytask}"
 endsnippet
 
-snippet rdate "create date from shift" i
+
+snippet str "create random string for changeid" i
 `!p
-from datetime import datetime, timedelta
-from dateutil.relativedelta import relativedelta
+import random
+import string
 
+def generate_random_string(length=10):
+    characters = string.ascii_letters + string.digits
+    random_string = ''.join(random.choice(characters) for _ in range(length))
+    return random_string
 
-def time_search(pattern, string=snip.v.text):
-	time_amount = re.search(pattern, string)
-	if time_amount is not None:
-		time_amount = time_amount.group(0)
-		num, time_type = time_amount[:-1], time_amount[-1]
-
-		if time_type.lower() == 'd':
-			return timedelta(days=int(num))
-		elif time_type.lower() == 'w':
-			return timedelta(weeks=int(num))
-		elif time_type.lower() == 'm':
-			return relativedelta(months=int(num))
-		elif time_type.lower() == 'y':
-			return relativedelta(years=int(num))
-	else:
-		return timedelta(days=0)
-
-
-pattern_list = ('\d+[dD]+', '\d+[wW]+', '\d+[mM]+', '\d+[yY]+')
-today = datetime.now()
-for pat in pattern_list:
-	today += time_search(pat, string=snip.v.text)
-snip.rv = today.strftime('%Y-%m-%d %H:%M')`
+if not snip.c:
+	snip.rv = generate_random_string()`
 endsnippet
 
-
-snippet dayend "print end of current day" i
-`!p
-from datetime import datetime
-today = datetime.now()
-snip.rv = today.strftime('%Y-%m-%d') + ' 23:59'`
-endsnippet
-
-
-snippet "\d+[Dd]+" "date shift with n day" ri
-`!p
-from datetime import datetime, timedelta
-from dateutil.relativedelta import relativedelta
-num = int(str(match.group(0))[:-1])
-today = datetime.now() + timedelta(days=num)
-snip.rv = today.strftime('%Y-%m-%d %H:%M')`
-endsnippet
-
-snippet "\d+[wW]+" "date shift with n weeks" ri
-`!p
-from datetime import datetime, timedelta
-from dateutil.relativedelta import relativedelta
-num = int(str(match.group(0))[:-1])
-today = datetime.now() + timedelta(weeks=num)
-snip.rv = today.strftime('%Y-%m-%d %H:%M')`
-endsnippet
 
 snippet cub "update words" i
 update cub
