@@ -102,8 +102,7 @@ fi
 # fi
 
 alias pt="python3"
-alias python="python3.12"
-alias tx="tmuxinator"
+alias python="/usr/bin/python3.13"
 alias ns="source ~/.new_session_tt"
 alias pdf="lowriter --convert-to pdf"
 alias ssh='kitty +kitten ssh'
@@ -111,6 +110,7 @@ alias airn="bluetoothctl connect C0:86:B3:DF:F8:59"
 alias airff="bluetoothctl disconnect C0:86:B3:DF:F8:59"
 alias venv="source /home/slava/code/bash_scripts/create_venv.sh"
 alias af='docker compose -f /home/slava/code/airflow-instanses/personal-2.4.2/docker-compose.yaml'
+alias t='docker compose -f /home/slava/torrent/docker-compose.yaml'
 
 alias yt-dlp=yt-dlp-wrapper
 
@@ -127,7 +127,6 @@ alias path="echo $PATH | tr : '\n'"
 
 alias ttl="sudo iptables -t mangle -A POSTROUTING -j TTL --ttl-set 65 && echo '-> ttl 65'"
 
-alias t="trans -indent 4 -d"
 alias nodiff="git diff --no-index"
 
 
