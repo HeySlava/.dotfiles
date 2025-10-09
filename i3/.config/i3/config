@@ -6,7 +6,7 @@ exec --no-startup-id firefox
 
 
 # keybinding to lock screen
-bindsym $mod+Control+l exec "i3lock -c 4D648D"
+bindsym $mod+Control+l exec "i3lock -c 4D648D && systemctl suspend"
 # auto lock the screen
 # exec "xautolock -detectsleep -time 10 -locker \"i3lock -c 4D648D\""
 
