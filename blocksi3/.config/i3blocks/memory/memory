@@ -35,7 +35,7 @@ def main() -> int:
             )
         swap_str = swap.stdout.split('\n')[1].split()[2].replace('G', '')
         swap_value = int(float(swap_str.replace(',', '.')))
-    except FileNotFoundError:
+    except (FileNotFoundError, IndexError):
         swap_value = 0
 
     total = get_gb(system.size)
