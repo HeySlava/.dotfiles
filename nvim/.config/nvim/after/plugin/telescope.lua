@@ -143,7 +143,13 @@ end
 
 
 local default = {
+    column = true,
     hidden = true,
+    ["line-number"] = true,
+    ["no-heading"] = true,
+    ["smart-case"] = true,
+    ["with-filename"] = true,
+    L = true,
 }
 
 
