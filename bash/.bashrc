@@ -102,15 +102,15 @@ fi
 # fi
 
 alias pt="python3"
-alias python="/usr/bin/python3.13"
-alias ns="source ~/.new_session_tt"
+# alias ns="source ~/.new_session_tt"
+alias ns=tmux-sessionizer
 alias pdf="lowriter --convert-to pdf"
 alias ssh='kitty +kitten ssh'
-alias airn="bluetoothctl connect C0:86:B3:DF:F8:59"
-alias airff="bluetoothctl disconnect C0:86:B3:DF:F8:59"
+alias airn="bluetoothctl connect A8:F5:E1:5E:6A:55"
+alias airff="bluetoothctl disconnect A8:F5:E1:5E:6A:55"
 alias venv="source /home/slava/code/bash_scripts/create_venv.sh"
 alias af='docker compose -f /home/slava/code/airflow-instanses/personal-2.4.2/docker-compose.yaml'
-alias t='docker compose -f /home/slava/torrent/docker-compose.yaml'
+alias t='docker compose -f /home/slava/code/torrent/docker-compose.yaml'
 
 alias yt-dlp=yt-dlp-wrapper
 
@@ -129,12 +129,15 @@ alias ttl="sudo iptables -t mangle -A POSTROUTING -j TTL --ttl-set 65 && echo '-
 
 alias nodiff="git diff --no-index"
 
+alias dc="docker compose"
+alias poki="docker compose -f /home/slava/code/pokitoki/compose.yml down && docker compose -f /home/slava/code/pokitoki/compose.yml up --build -d"
+
 
 bind 'set bell-style none'
 
 
 export PATH=$PATH:$HOME/.local/bin/
-export PATH=/opt/node-v20.10.0-linux-x64/bin:$PATH
+export PATH=/opt/node-v20.18.1-linux-x64/bin:$PATH
 export PATH=$HOME/code/learn.clickhouse.com:$PATH
 export EDITOR='nvim'
 
@@ -161,3 +164,12 @@ rmv() {
 }
 
 export WORK_REPOS_CONFIG_FILENAME=$HOME/code/output/repos.json
+. "$HOME/.cargo/env"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export NODE_VERSION=20.18.1
+
+
+alias kubectl="minikube kubectl --"
