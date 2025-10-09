@@ -1,4 +1,3 @@
-
 vim.g.python3_host_prog = "/usr/bin/python3"
 
 vim.opt.mouse="a"  -- enable mouse set encoding=utf-8
@@ -31,6 +30,8 @@ vim.opt.undofile = true
 vim.g.netrw_preview   = 1
 vim.g.netrw_liststyle = 3
 vim.g.netrw_winsize   = 30
+vim.g.netrw_keepdir = 0
+
 vim.g.mapleader = " "
 
 vim.api.nvim_create_autocmd("BufEnter", {
@@ -78,3 +79,11 @@ vim.api.nvim_create_autocmd({"BufEnter", "BufWrite"}, {
         end)
     end,
 })
+
+vim.api.nvim_create_user_command('CopyPath', function()
+  local path = vim.fn.expand('%:p')
+  vim.fn.setreg('+', path)
+  vim.notify('✅ Copied to clipboard: ' .. path, vim.log.levels.INFO)
+end, {})
+
+vim.keymap.set('n', '<leader>cp', ':CopyPath<CR>', { desc = 'Copy current file path to clipboard' })
