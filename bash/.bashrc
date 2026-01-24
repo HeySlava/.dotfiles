@@ -173,3 +173,5 @@ export NODE_VERSION=20.18.1
 
 
 alias kubectl="minikube kubectl --"
+export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+export PATH=$JAVA_HOME/bin:$PATH

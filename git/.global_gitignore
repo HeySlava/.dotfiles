@@ -29,3 +29,7 @@ MANIFEST
 
 .env
 VENV.sh
+
+target/
+.metals/
+.bloop/
