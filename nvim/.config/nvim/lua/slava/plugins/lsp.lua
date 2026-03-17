@@ -14,30 +14,47 @@ return {
             "j-hui/fidget.nvim",
         },
         config = function()
+            vim.filetype.add {
+                extension = {
+                    jinja = 'jinja',
+                    jinja2 = 'jinja',
+                    j2 = 'jinja',
+                },
+            }
+
+            local servers = {
+                pyright = {},
+                lua_ls = {
+                    settings = {
+                        Lua = {
+                            diagnostics = { globals = { "vim" } }
+                        }
+                    }
+                },
+                ansiblels = {},
+                docker_compose_language_service = {},
+                dockerls = {},
+                jinja_lsp = {
+                    filetypes = { 'jinja', 'rust', 'python', 'sql' },
+                    init_options = {
+                        templates = "./",
+                        backend = { "./" },
+                        lang = "sql",
+                        template_extensions = { "j2", "sql", "jinja" },
+                    },
+                },
+            }
+
             local cmp = require('cmp')
             local cmp_lsp = require("cmp_nvim_lsp")
             -- Mason Setup
             require("mason").setup()
             require("mason-lspconfig").setup({
-                ensure_installed = {
-                    "pyright",
-                    "lua_ls",
-                    "ansiblels",
-                    "docker_compose_language_service",
-                    "dockerls",
-                },
+                ensure_installed = vim.tbl_keys(servers),
                 handlers = {
                     function(server_name)
-                        require("lspconfig")[server_name].setup {}
-                    end,
-                    ["lua_ls"] = function()
-                        require("lspconfig").lua_ls.setup {
-                            settings = {
-                                Lua = {
-                                    diagnostics = { globals = { "vim" } }
-                                }
-                            }
-                        }
+                        local server_config = servers[server_name] or {}
+                        require("lspconfig")[server_name].setup(server_config)
                     end,
                 }
             })
@@ -58,6 +75,7 @@ return {
                 sources = cmp.config.sources({
                     { name = 'nvim_lsp' },
                     { name = 'luasnip' },
+                    { name = 'path' },
                 }, {
                     { name = 'buffer' },
                 })
