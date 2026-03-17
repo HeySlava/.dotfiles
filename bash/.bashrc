@@ -102,7 +102,6 @@ fi
 # fi
 
 alias pt="python3"
-# alias ns="source ~/.new_session_tt"
 alias ns=tmux-sessionizer
 alias pdf="lowriter --convert-to pdf"
 alias ssh='kitty +kitten ssh'
@@ -130,7 +129,6 @@ alias ttl="sudo iptables -t mangle -A POSTROUTING -j TTL --ttl-set 65 && echo '-
 alias nodiff="git diff --no-index"
 
 alias dc="docker compose"
-alias poki="docker compose -f /home/slava/code/pokitoki/compose.yml down && docker compose -f /home/slava/code/pokitoki/compose.yml up --build -d"
 
 
 bind 'set bell-style none'
@@ -175,3 +173,5 @@ export NODE_VERSION=20.18.1
 alias kubectl="minikube kubectl --"
 export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
 export PATH=$JAVA_HOME/bin:$PATH
+
+alias vpn="/snap/bin/v2raya.v2raya-browser-wrapper"
