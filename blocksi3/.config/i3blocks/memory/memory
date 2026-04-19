@@ -1,48 +1,69 @@
 #!/usr/bin/python3
 import subprocess
-from typing import NamedTuple
 
 
-class System(NamedTuple):
-    fs: str
-    size: str
-    used: str
-    avail: str
-    use_percent: str
-    mounted_on: str
-
-
-def get_gb(v: str) -> int:
-    return int(float(v.replace('G', '')))
+def parse_h(value: str) -> float:
+    if value.endswith('G'):
+        return float(value[:-1].replace(',', '.'))
+    if value.endswith('M'):
+        return float(value[:-1].replace(',', '.')) / 1024
+    if value.endswith('T'):
+        return float(value[:-1].replace(',', '.')) * 1024
+    return 0.0
 
 
 def main() -> int:
-
-    memory = subprocess.run(
-            ('df', '-h'),
+    # Get disk usage
+    try:
+        df = subprocess.run(
+            ['df', '-h'],
             capture_output=True,
             text=True,
+            check=True
         )
-    memory_l = memory.stdout.strip().splitlines()
-    systems = [System(*s.strip().split()) for s in memory_l[1:]]
-    system = next((s for s in systems if s.mounted_on == '/'))
+    except subprocess.CalledProcessError:
+        print("Error running df")
+        return 1
 
+    lines = df.stdout.strip().splitlines()[1:]
+    total_gb = 0.0
+    used_gb = 0.0
+
+    for line in lines:
+        parts = line.split()
+        if len(parts) < 6:
+            continue
+        source, size, used, target = parts[0], parts[1], parts[2], parts[5]
+
+        # Include physical partitions (/dev/...), but exclude boot partition
+        if (source.startswith('/dev/') and
+                not source.startswith('/dev/loop') and
+                target != '/boot/efi'):
+            total_gb += parse_h(size)
+            used_gb += parse_h(used)
+
+    # Get swap size
     try:
         swap = subprocess.run(
-                ['swapon', '--show'],
-                capture_output=True,
-                text=True,
-            )
-        swap_str = swap.stdout.split('\n')[1].split()[2].replace('G', '')
-        swap_value = int(float(swap_str.replace(',', '.')))
-    except (FileNotFoundError, IndexError):
-        swap_value = 0
+            ['swapon', '--show=SIZE', '--bytes', '--noheadings'],
+            capture_output=True,
+            text=True
+        )
+        swap_val = 0.0
+        for s_line in swap.stdout.strip().splitlines():
+            if s_line.strip():
+                swap_val += float(s_line.strip()) / (1024**3)
+    except (FileNotFoundError, subprocess.CalledProcessError, ValueError):
+        swap_val = 0.0
 
-    total = get_gb(system.size)
-    used = get_gb(system.used)
-    print(f"{used - swap_value}G/{total - swap_value}G")
+    # Subtract swap from both as per previous logic
+    # (assuming swap is a file on disk)
+    final_used = int(used_gb - swap_val)
+    final_total = int(total_gb - swap_val)
+
+    print(f"{max(0, final_used)}G/{max(0, final_total)}G")
     return 0
 
 
 if __name__ == '__main__':
-    raise SystemExit(main())
+    main()
