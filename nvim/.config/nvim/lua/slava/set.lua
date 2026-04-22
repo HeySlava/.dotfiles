@@ -1,4 +1,4 @@
-vim.g.python3_host_prog = "/usr/bin/python3"
+vim.g.python3_host_prog = os.getenv("HOME") .. "/.nvim-python-venv/bin/python"
 
 vim.opt.mouse="a"  -- enable mouse set encoding=utf-8
 vim.opt.number = true
