@@ -135,7 +135,7 @@ bind 'set bell-style none'
 
 
 export PATH=$PATH:$HOME/.local/bin/
-export PATH=/opt/node-v20.18.1-linux-x64/bin:$PATH
+export PATH=$HOME/code/bash_scripts:$PATH
 export PATH=$HOME/code/learn.clickhouse.com:$PATH
 export EDITOR='nvim'
 
@@ -167,11 +167,12 @@ export WORK_REPOS_CONFIG_FILENAME=$HOME/code/output/repos.json
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export NODE_VERSION=20.18.1
+export NODE_VERSION=22.22.3
 
 
-alias kubectl="minikube kubectl --"
+# alias kubectl="minikube kubectl --"
 export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
 export PATH=$JAVA_HOME/bin:$PATH
 
 alias vpn="/snap/bin/v2raya.v2raya-browser-wrapper"
+source /home/slava/code/bash_scripts/ds.sh
