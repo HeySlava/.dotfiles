@@ -317,12 +317,12 @@ if [[ ! -z $session_cmd ]]; then
     handle_session_cmd
 elif [[ ! -z $user_selected ]]; then
     selected="$user_selected"
-    # Added logic to handle user_selected being '.' or a specific path
+    # Resolve '.' to the absolute current directory so the session behaves
+    # exactly like one selected via fzf (correct name, path, and tmux listing)
     if [[ "$selected" == "." ]]; then
-        selected_name=$(basename "$(pwd)" | tr . _)
-    else
-        selected_name=$(basename "$selected" | tr . _)
+        selected="$(pwd)"
     fi
+    selected_name=$(basename "$selected" | tr . _)
 else
     selected=$(find_dirs | fzf)
 fi
