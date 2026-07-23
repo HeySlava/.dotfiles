@@ -33,3 +33,7 @@ VENV.sh
 target/
 .metals/
 .bloop/
+
+.pi/
+.vscode/
+.cursor/
