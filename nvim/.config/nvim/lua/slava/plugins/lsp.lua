@@ -91,7 +91,13 @@ return {
                         vim.keymap.set('n', keys, func, { buffer = event.buf, desc = desc })
                     end
 
-                    bind("gd", vim.lsp.buf.definition, "Go to definition")
+                    local dbt = require("slava.dbt")
+                    local ft = vim.bo[event.buf].filetype
+                    if dbt.is_dbt_project() and (ft == "sql" or ft == "jinja") then
+                        -- dbt.lua handles gd via FileType autocmd
+                    else
+                        bind("gd", vim.lsp.buf.definition, "Go to definition")
+                    end
                     bind("K", vim.lsp.buf.hover, "Hover")
                     bind("<leader>vws", vim.lsp.buf.workspace_symbol, "Workspace Symbol")
                     bind("<leader>d", vim.diagnostic.open_float, "Open Diagnostics")
